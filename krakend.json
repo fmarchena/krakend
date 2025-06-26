@@ -130,7 +130,7 @@
       "extra_config": {
     "validation/cel": [
       {
-        "check_expr": "'10.0.0.1' in req_headers['X-Forwarded-For']",
+             "check_expr": "has(req_headers['X-Forwarded-For']) && '10.0.0.1' in req_headers['X-Forwarded-For']",
         "deny_response": {
           "status_code": 403,
           "body": "{\"error\": \"IP no autorizada\"}"
