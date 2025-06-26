@@ -8,3 +8,4 @@ Content-Type: application/json
 }
 ### Health Check
 GET {{host}}/api/v1/health-check
+X-Forwarded-For: 10.0.0.12
