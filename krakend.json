@@ -1,0 +1,168 @@
+{
+  "version": 3,
+  "name": "KrakenD API Gateway - JWT Validation",
+  "port": 8090,
+  "timeout": "30s",
+  "cache_ttl": "300s",
+  "output_encoding": "json",
+  "endpoints": [
+    {
+      "endpoint": "/api/v1/conditional-operation",
+      "method": "POST",
+      "output_encoding": "json",
+      "timeout": "25s",
+      "extra_config": {
+        "auth/validator": {
+          "alg": "HS256",
+          "jwk_local_path": "/etc/krakend/jwt/jwks.json",
+          "disable_jwk_security": true,
+          "operation_debug": true
+        },
+        "proxy": {
+          "sequential": true
+        }
+      },
+      "backend": [
+        {
+          "url_pattern": "/first-endpoint",
+          "encoding": "json",
+          "method": "POST",
+          "host": ["http://localhost:3001"],
+          "timeout": "10s",
+          "extra_config": {
+            "backend/http": {
+              "return_error_details": "first_service"
+            }
+          }
+        },
+        {
+          "url_pattern": "/second-endpoint/{resp0_data.operationId}",
+          "encoding": "json",
+          "method": "GET",
+          "host": ["http://localhost:3002"],
+          "timeout": "10s",
+          "extra_config": {
+            "backend/http": {
+              "return_error_details": "second_service"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "endpoint": "/api/v1/random-operation",
+      "method": "POST",
+      "output_encoding": "json",
+      "timeout": "25s",
+      "extra_config": {
+        "auth/validator": {
+          "alg": "HS256",
+          "jwk_local_path": "/etc/krakend/jwt/jwks.json",
+          "disable_jwk_security": true
+        },
+        "proxy": {
+          "sequential": true
+        }
+      },
+      "backend": [
+        {
+          "url_pattern": "/random-endpoint",
+          "encoding": "json",
+          "method": "POST",
+          "host": ["http://localhost:3001"],
+          "timeout": "10s"
+        },
+        {
+          "url_pattern": "/second-endpoint/{resp0_data.operationId}",
+          "encoding": "json",
+          "method": "GET",
+          "host": ["http://localhost:3002"],
+          "timeout": "10s"
+        }
+      ]
+    },
+    {
+      "endpoint": "/health",
+      "method": "GET",
+      "extra_config": {
+        "auth/validator": {
+          "alg": "HS256",
+          "jwk_local_path": "/etc/krakend/jwt/jwks.json",
+          "disable_jwk_security": true
+        }
+      },
+      "backend": [
+        {
+          "url_pattern": "/health",
+          "host": ["http://localhost:3001"],
+          "timeout": "3s"
+        }
+      ]
+    },
+    {
+      "endpoint": "/api/v1/test-success",
+      "method": "POST",
+      "extra_config": {
+        "auth/validator": {
+          "alg": "HS256",
+          "jwk_local_path": "/etc/krakend/jwt/jwks.json",
+          "disable_jwk_security": true
+        }
+      },
+      "backend": [
+        {
+          "url_pattern": "/test-success",
+          "method": "POST",
+          "host": ["http://localhost:3001"],
+          "timeout": "5s"
+        }
+      ]
+    },
+    {
+      "endpoint": "/api/v1/test-failure",
+      "method": "POST",
+      "backend": [
+        {
+          "url_pattern": "/test-failure",
+          "method": "POST",
+          "host": ["http://localhost:3001"],
+          "timeout": "5s"
+        }
+      ]
+    },
+    {
+      "endpoint": "/api/v1/health-check",
+      "method": "GET",
+      "backend": [
+        {
+          "url_pattern": "/health",
+          "host": ["http://localhost:3001"]
+        },
+        {
+          "url_pattern": "/health",
+          "host": ["http://localhost:3002"]
+        }
+      ]
+    }
+  ],
+  "extra_config": {
+    "security/cors": {
+      "allow_origins": ["*"],
+      "allow_methods": ["POST", "GET", "PUT", "DELETE", "OPTIONS"],
+      "allow_headers": [
+        "Origin",
+        "Authorization",
+        "Content-Type",
+        "X-Requested-With",
+        "Accept"
+      ],
+      "expose_headers": ["Content-Length"],
+      "max_age": "12h",
+      "allow_credentials": false,
+      "debug": false
+    },
+    "router": {
+      "return_error_msg": true
+    }
+  }
+}

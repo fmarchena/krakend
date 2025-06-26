@@ -1,0 +1,10 @@
+{
+  "keys": [
+    {
+      "kty": "oct",
+      "k": "c2VjcmV0X2tleV9mb3JfYXBpX2dhdGV3YXlfam9uZXNfc2VjdXJpdHk=",
+      "kid": "api-key",
+      "alg": "HS256"
+    }
+  ]
+}
