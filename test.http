@@ -1,6 +1,6 @@
 @host = http://krakend-rocky96.labscloudhibirds.site
 POST {{host}}/api/v1/conditional-operation
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsImtpZCI6ImtleTEifQ.eyJzdWIiOiJzaGV5bGEifQ.2cJz8zy8wJdpFifChdcoR1QaAzpZecK2anWp_lIgBqY
+X-JWT: eyJhbGciOiJIUzI1NiIsImtpZCI6ImtleTEifQ.eyJzdWIiOiJzaGV5bGEifQ.L4oztPoJpWbLZ7Fb6Z26BrTBSk3qZCJxEzEl4HLOHQ8
 Content-Type: application/json
 
 {
