@@ -1,0 +1,10 @@
+@host = http://krakend-rocky96.labscloudhibirds.site
+POST {{host}}/api/v1/conditional-operation
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsImtpZCI6ImtleTEifQ.eyJzdWIiOiJzaGV5bGEifQ.2cJz8zy8wJdpFifChdcoR1QaAzpZecK2anWp_lIgBqY
+Content-Type: application/json
+
+{
+  "any": "data"
+}
+### Health Check
+GET {{host}}/api/v1/health-check

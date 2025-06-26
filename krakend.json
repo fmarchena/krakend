@@ -16,7 +16,8 @@
           "alg": "HS256",
           "jwk_local_path": "/etc/krakend/jwt/jwks.json",
           "disable_jwk_security": true,
-          "operation_debug": true
+          "operation_debug": true,
+          "header": "X-JWT"
         },
         "proxy": {
           "sequential": true
@@ -84,13 +85,6 @@
     {
       "endpoint": "/health",
       "method": "GET",
-      "extra_config": {
-        "auth/validator": {
-          "alg": "HS256",
-          "jwk_local_path": "/etc/krakend/jwt/jwks.json",
-          "disable_jwk_security": true
-        }
-      },
       "backend": [
         {
           "url_pattern": "/health",
